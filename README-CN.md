@@ -28,7 +28,7 @@ terraform-alicloud-alb-quic
 ```hcl
 module "example" {
   create                 = true
-  source                 = "../.."
+  source                 = "terraform-alicloud-modules/alb-quic/alicloud"
   vpc_id                 = alicloud_vpc.default.id
   address_type           = "Internet"
   address_allocated_mode = "Fixed"

@@ -29,13 +29,13 @@ variable "create" {
 }
 
 variable "log_project_name" {
-  default = "tflogprojectname"
-  type = string
+  default     = "tflogprojectname"
+  type        = string
   description = "The name of log project."
 }
 
 variable "log_store_name" {
-  default = "tflogstorename"
-  type = string
+  default     = "tflogstorename"
+  type        = string
   description = "The name of log store."
 }

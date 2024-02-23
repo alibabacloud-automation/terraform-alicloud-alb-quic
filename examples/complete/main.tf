@@ -1,6 +1,11 @@
+resource "random_integer" "default" {
+  max = 99999
+  min = 10000
+}
+
 resource "alicloud_ssl_certificates_service_certificate" "default" {
-  certificate_name = "tf_test_certificate"
-  cert = <<EOF
+  certificate_name = "tf_certificate_${random_integer.default.result}"
+  cert             = <<EOF
 -----BEGIN CERTIFICATE-----
 MIIDRjCCAq+gAwIBAgIJAJn3ox4K13PoMA0GCSqGSIb3DQEBBQUAMHYxCzAJBgNV
 BAYTAkNOMQswCQYDVQQIEwJCSjELMAkGA1UEBxMCQkoxDDAKBgNVBAoTA0FMSTEP
@@ -22,7 +27,7 @@ Ofi6hVgErtHaXJheuPVeW6eAW8mHBoEfvDAfU3y9waYrtUevSl07643bzKL6v+Qd
 DUBTxOAvSYfXTtI90EAxEG/bJJyOm5LqoiA=
 -----END CERTIFICATE-----
 EOF
-  key = <<EOF
+  key              = <<EOF
 -----BEGIN RSA PRIVATE KEY-----
 MIICXAIBAAKBgQDO0kt3vfjY9BygLEbiAzUrEt1Cum/utmEG9rroSq6dRzKzsetV
 kg0dqpAJwXKBtNFM9/BBPvQy2DVFUASu2koCz+TNQJOMK+BqhsgoI3o884dw7IVM
@@ -63,13 +68,13 @@ resource "alicloud_vswitch" "vswitch_2" {
 }
 
 resource "alicloud_log_project" "default" {
-  name        = var.log_project_name
-  description = "created by terraform"
+  project_name = "${var.log_project_name}-${random_integer.default.result}"
+  description  = "created by terraform"
 }
 
 resource "alicloud_log_store" "default" {
-  project               = alicloud_log_project.default.name
-  name                  = var.log_store_name
+  project_name          = alicloud_log_project.default.project_name
+  logstore_name         = "${var.log_store_name}-${random_integer.default.result}"
   shard_count           = 3
   auto_split            = true
   max_split_shard_count = 60
@@ -84,7 +89,7 @@ module "example" {
   address_allocated_mode = "Fixed"
   load_balancer_name     = "tf_alb_name"
   load_balancer_edition  = "Basic"
-  zone_mappings          = [
+  zone_mappings = [
     { vswitch_id = alicloud_vswitch.vswitch_1.id, zone_id = data.alicloud_alb_zones.default.zones.0.id },
     { vswitch_id = alicloud_vswitch.vswitch_2.id, zone_id = data.alicloud_alb_zones.default.zones.1.id }
   ]
@@ -93,7 +98,7 @@ module "example" {
   ]
   acl_name             = "tf_acl_name"
   server_group_name    = "acl_server_group_name"
-  certificate_id = join("",[alicloud_ssl_certificates_service_certificate.default.id,"-cn-hangzhou"])
-  listener_port = 80
+  certificate_id       = join("", [alicloud_ssl_certificates_service_certificate.default.id, "-cn-hangzhou"])
+  listener_port        = 80
   listener_description = "CreatedByTerraform"
 }
