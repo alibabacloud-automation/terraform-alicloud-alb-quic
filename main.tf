@@ -82,10 +82,11 @@ resource "alicloud_alb_listener" "alb_listener" {
   certificates {
     certificate_id = var.certificate_id
   }
-  acl_config {
-    acl_type = "White"
-    acl_relations {
-      acl_id = alicloud_alb_acl.alb_acl.0.id
-    }
-  }
+}
+
+resource "alicloud_alb_listener_acl_attachment" "default" {
+  count       = var.create ? 1 : 0
+  acl_id      = alicloud_alb_acl.alb_acl[0].id
+  listener_id = alicloud_alb_listener.alb_listener[0].id
+  acl_type    = "White"
 }
