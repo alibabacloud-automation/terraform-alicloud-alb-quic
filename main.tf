@@ -67,7 +67,7 @@ resource "alicloud_alb_acl" "alb_acl" {
 
 resource "alicloud_alb_listener" "alb_listener" {
   count                = var.create ? 1 : 0
-  load_balancer_id     = alicloud_alb_load_balancer.alb.0.id
+  load_balancer_id     = alicloud_alb_load_balancer.alb[0].id
   listener_protocol    = "QUIC"
   listener_port        = var.listener_port
   listener_description = var.listener_description
@@ -75,7 +75,7 @@ resource "alicloud_alb_listener" "alb_listener" {
     type = "ForwardGroup"
     forward_group_config {
       server_group_tuples {
-        server_group_id = alicloud_alb_server_group.alb_server_group.0.id
+        server_group_id = alicloud_alb_server_group.alb_server_group[0].id
       }
     }
   }

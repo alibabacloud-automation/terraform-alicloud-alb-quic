@@ -35,12 +35,6 @@ variable "load_balancer_edition" {
   description = "The edition of ALB."
 }
 
-variable "deletion_protection_enabled" {
-  default     = false
-  type        = bool
-  description = "The deletion protection enabled."
-}
-
 variable "access_log_config" {
   type = list(object({
     log_project = string
