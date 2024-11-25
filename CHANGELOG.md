@@ -1,4 +1,8 @@
-## 1.3.0 (Unreleased)
+## 1.4.0 (Unreleased)
+## 1.3.0 (2024-11-25)
+
+- Module: remove deprecated attributes; examples: improve the examples [GH-4](https://github.com/alibabacloud-automation/terraform-alicloud-alb-quic/pull/4)
+
 ## 1.2.0 (2024-08-02)
 
 - module/alicloud_alb_listener: deprecate attribute acl_config; support resource alicloud_alb_listener_acl_attachment. [GH-3](https://github.com/alibabacloud-automation/terraform-alicloud-alb-quic/pull/3)
