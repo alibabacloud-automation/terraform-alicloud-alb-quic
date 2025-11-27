@@ -1,3 +1,5 @@
+## [1.3.1](https://github.com/alibabacloud-automation/terraform-alicloud-alb-quic/compare/v1.3.0...v1.3.1) (2025-11-27)
+
 ## 1.4.0 (Unreleased)
 ## 1.3.0 (2024-11-25)
 
